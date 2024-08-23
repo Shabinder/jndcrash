@@ -2,8 +2,6 @@ package ru.ivanarh.jndcrash;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 /**
  * Main binding class for NDCrash functionality.
@@ -17,12 +15,12 @@ public class NDCrash {
      * @param unwinder        Used unwinder. See ndcrash_unwinder type in ndcrash.h.
      * @return Error status.
      */
-    public static NDCrashError initializeInProcess(@Nullable String crashReportPath, NDCrashUnwinder unwinder) {
+    public static NDCrashError initializeInProcess( String crashReportPath, NDCrashUnwinder unwinder) {
         return NDCrashError.values()[nativeInitializeInProcess(crashReportPath, unwinder.ordinal())];
     }
 
     /// Native implementation method.
-    private static native int nativeInitializeInProcess(@Nullable String crashReportPath, int unwinder);
+    private static native int nativeInitializeInProcess( String crashReportPath, int unwinder);
 
     /**
      * De-initializes NDCrash library signal handler using in-process mode.
@@ -49,10 +47,10 @@ public class NDCrash {
      * @return Error status.
      */
     public static NDCrashError initializeOutOfProcess(
-            @NonNull Context context,
-            @Nullable String crashReportPath,
-            @NonNull NDCrashUnwinder unwinder,
-            @NonNull Class<? extends NDCrashService> serviceClass) {
+            Context context,
+             String crashReportPath,
+            NDCrashUnwinder unwinder,
+            Class<? extends NDCrashService> serviceClass) {
         if (NDCrashUtils.isCrashServiceProcess(context, serviceClass)) {
             // If it's a background crash service process we don't need to initialize anything,
             // we treat this situation as no error because this method is designed to call from
@@ -77,7 +75,7 @@ public class NDCrash {
     }
 
     /// Native implementation method.
-    private static native int nativeInitializeOutOfProcess(@NonNull String socketName);
+    private static native int nativeInitializeOutOfProcess(String socketName);
 
     /**
      * De-initializes NDCrash library signal handler using out-of-process mode.
@@ -85,7 +83,7 @@ public class NDCrash {
      * @param context Context instance. Used to stop a service.
      * @return Flag whether de-initialization was successful.
      */
-    public static boolean deInitializeOutOfProcess(@NonNull Context context) {
+    public static boolean deInitializeOutOfProcess(Context context) {
         if (mServiceClass != null) {
             context.stopService(new Intent(context, mServiceClass));
             mServiceClass = null;
@@ -107,10 +105,10 @@ public class NDCrash {
      * @return Error status.
      */
     static NDCrashError startOutOfProcessDaemon(
-            @NonNull Context context,
-            @Nullable String crashReportPath,
-            @NonNull NDCrashUnwinder unwinder,
-            @Nullable OnCrashCallback callback) {
+            Context context,
+             String crashReportPath,
+            NDCrashUnwinder unwinder,
+             OnCrashCallback callback) {
         if (NDCrashUtils.isMainProcess(context)) {
             return NDCrashError.error_wrong_process;
         }
@@ -124,8 +122,8 @@ public class NDCrash {
 
     /// Native implementation method.
     private static native int nativeStartOutOfProcessDaemon(
-            @NonNull String socketName,
-            @Nullable String crashReportPath,
+            String socketName,
+             String crashReportPath,
             int unwinder);
 
     /**
@@ -145,13 +143,13 @@ public class NDCrash {
     /**
      * Instance of crash callback.
      */
-    @Nullable
+    
     private static volatile OnCrashCallback mOnCrashCallback = null;
 
     /**
      * Background service class for out-of-process mode.
      */
-    @Nullable
+    
     private static Class<? extends NDCrashService> mServiceClass = null;
 
     /**
@@ -173,7 +171,7 @@ public class NDCrash {
      * @param context Context to use.
      * @return Socket name.
      */
-    private static String getSocketName(@NonNull Context context) {
+    private static String getSocketName(Context context) {
         return context.getPackageName() + ".ndcrash";
     }
 

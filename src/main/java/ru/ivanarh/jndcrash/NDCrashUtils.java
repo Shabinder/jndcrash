@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.ServiceInfo;
 import android.os.Process;
-import android.support.annotation.NonNull;
 
 /**
  * Contains some utility code.
@@ -19,7 +18,7 @@ public class NDCrashUtils {
      * @param context Current context.
      * @return Flag whether it's a main process.
      */
-    public static boolean isMainProcess(@NonNull Context context) {
+    public static boolean isMainProcess(Context context) {
         final int pid = Process.myPid();
         final String packageName = context.getPackageName();
         final ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -40,7 +39,7 @@ public class NDCrashUtils {
      * @param serviceClass Class of background crash reporting service.
      * @return Flag whether a current process is a background crash service process.
      */
-    public static boolean isCrashServiceProcess(@NonNull Context context, @NonNull Class<? extends NDCrashService> serviceClass) {
+    public static boolean isCrashServiceProcess(Context context, Class<? extends NDCrashService> serviceClass) {
         final ServiceInfo serviceInfo;
         try {
             serviceInfo = context.getPackageManager().getServiceInfo(new ComponentName(context, serviceClass), 0);

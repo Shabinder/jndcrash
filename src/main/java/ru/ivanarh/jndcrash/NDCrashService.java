@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.support.annotation.CallSuper;
 import android.util.Log;
 
 /**
@@ -86,7 +85,7 @@ public class NDCrashService extends Service implements NDCrash.OnCrashCallback
         return Service.START_STICKY;
     }
 
-    @Override @CallSuper
+    @Override
     public void onDestroy() {
         if (mDaemonStarted) {
             mDaemonStarted = false;
