@@ -5,7 +5,7 @@ android {
     defaultConfig {
         namespace "ru.ivanarh.jndcrash"
         minSdk 21
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -26,6 +26,12 @@ android {
         }
     }
 
+    compileOptions {
+        coreLibraryDesugaringEnabled(true)
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
@@ -39,4 +45,11 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.2")
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
