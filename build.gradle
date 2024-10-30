@@ -1,4 +1,45 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 apply plugin: 'com.android.library'
+apply plugin: 'com.vanniktech.maven.publish'
+
+mavenPublishing {
+  publishToMavenCentral(SonatypeHost.S01, true)
+  signAllPublications()
+
+  coordinates("io.github.shabinder", "jndcrash", "1.0.0")
+  pom {
+    name.set("soundbound-jndcrash")
+    description.set("SoundBound NDK Crash Helper")
+    url.set("https://github.com/Shabinder/jndcrash")
+
+    developers {
+      developer {
+        id.set("shabinder")
+        name.set("Shabinder Singh")
+        email.set("dev.shabinder@gmail.com")
+      }
+    }
+
+    licenses {
+      license {
+        name.set("GPL-3.0 License")
+        url.set("https://www.gnu.org/licenses/gpl-3.0.en.html")
+      }
+    }
+
+    scm {
+      connection.set("scm:git:git://github.com/Shabinder/jndcrash.git")
+      developerConnection.set("scm:git:ssh://github.com/Shabinder/jndcrash.git")
+      url.set("https://github.com/Shabinder/jndcrash/")
+    }
+
+    issueManagement {
+      system.set("GitHub Issues")
+      url.set("https://github.com/Shabinder/jndcrash/issues")
+    }
+  }
+}
 
 android {
     compileSdk 34
